@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NK Creations — Admin Studio Management Portal</title>
+  <link rel="icon" type="image/jpeg" href="img/logo.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="admin-glow"></div>
+
+  <!-- PASSCODE LOGIN MODAL -->
+  <div class="login-backdrop" id="loginBackdrop">
+    <div class="login-box">
+      <img src="img/logo.jpg" alt="NK Creations Logo" class="login-logo">
+      <h2>NK CREATIONS <span class="gold-text">ADMIN</span></h2>
+      <p>Enter your studio passcode to access portfolio uploads and inquiry management.</p>
+
+      <form id="loginForm">
+        <div class="form-row">
+          <input type="password" id="pinInput" class="form-control" placeholder="Enter Passcode (Default: nkadmin2026)" required autofocus style="text-align:center; font-size:1.1rem; letter-spacing:2px;">
+        </div>
+        <p id="loginError" style="color:#ff6b6b; font-size:0.85rem; margin-bottom:14px; display:none;"></p>
+        <button type="submit" class="btn btn-gold" style="width:100%;">Unlock Dashboard</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN HEADER -->
+  <header class="admin-header">
+    <div class="admin-header-content">
+      <div class="brand-wrap">
+        <img src="img/logo.jpg" alt="NK Creations Logo" class="brand-badge-img">
+        <div>NK <span class="gold-text">CREATIONS</span></div>
+        <span class="admin-tag">STUDIO PORTAL</span>
+      </div>
+
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-outline" target="_blank">
+          <span>👁️</span> View Live Website
+        </a>
+        <button class="btn btn-outline" id="logoutBtn">
+          <span>🔒</span> Lock
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN ADMIN DASHBOARD -->
+  <main class="admin-container">
+
+    <!-- METRICS ROW -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-wrap">🎨</div>
+        <div class="stat-info">
+          <h3 id="totalProjectsCount">9</h3>
+          <p>Live Portfolio Items</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap">📸</div>
+        <div class="stat-info">
+          <h3 id="uploadedWorksCount">0</h3>
+          <p>Custom Uploaded Works</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap">📩</div>
+        <div class="stat-info">
+          <h3 id="inquiriesCount">0</h3>
+          <p>Client Inquiries</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="dashboard-nav-tabs">
+      <button class="tab-btn active" data-tab="uploadTab">✨ Upload New Photo / Project</button>
+      <button class="tab-btn" data-tab="manageTab">📁 Manage Uploaded Works</button>
+      <button class="tab-btn" data-tab="inquiriesTab">📬 Client Inquiries Inbox</button>
+    </div>
+
+    <!-- TAB 1: UPLOAD PHOTO & PROJECT -->
+    <div class="tab-panel active" id="uploadTab">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2>Upload Custom Photo / Design Work</h2>
+          <p>Upload your posters, thumbnails, reel covers, or branding graphics. They will immediately go live on the main website portfolio.</p>
+        </div>
+
+        <form id="uploadProjectForm">
+          <div class="upload-grid">
+            <!-- Left: Drop Zone & Media Preview -->
+            <div>
+              <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">📤</div>
+                <p>Click or Drag & Drop Photo or Video (Reel)</p>
+                <span>Supports JPG, PNG, WEBP, MP4, WEBM</span>
+                <input type="file" id="projectImageInput" accept="image/*,video/*" style="display:none;">
+
+                <div class="image-preview-container" id="imagePreviewContainer">
+                  <img id="previewImg" src="" alt="Preview" style="display:none; max-height:220px; border-radius:8px; object-fit:contain;">
+                  <video id="previewVideo" autoplay loop muted playsinline style="display:none; width:100%; max-height:220px; border-radius:8px; object-fit:contain;"></video>
+                  <button type="button" class="remove-img-btn" id="removeImgBtn" title="Remove Media">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Project Details Form -->
+            <div>
+              <div class="form-row">
+                <label class="form-label" for="projectTitle">Project Title</label>
+                <input type="text" id="projectTitle" class="form-control" placeholder="e.g. Cinematic Travel Reel / Energy Drink Poster" required>
+              </div>
+
+              <div class="form-row">
+                <label class="form-label" for="projectCategory">Category Filter</label>
+                <select id="projectCategory" class="form-control" required>
+                  <option value="reels">🎬 Instagram Reels & Video Edits</option>
+                  <option value="posters">🎨 Poster Design (Posters)</option>
+                  <option value="thumbnails">⚡ YouTube Thumbnails</option>
+                  <option value="social">📱 Social Media Design</option>
+                  <option value="branding">🖼️ Brand Identity & Logo</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label class="form-label" for="projectReelUrl">Instagram Reel / Video Link (Optional)</label>
+                <input type="url" id="projectReelUrl" class="form-control" placeholder="https://www.instagram.com/reel/...">
+              </div>
+
+              <div class="form-row">
+                <label class="form-label" for="projectSoftware">Software & Tools Used (comma-separated)</label>
+                <input type="text" id="projectSoftware" class="form-control" placeholder="e.g. Premiere Pro, After Effects, Photoshop" value="Adobe Premiere Pro, After Effects">
+              </div>
+
+              <div class="form-row">
+                <label class="form-label" for="projectDesc">Short Description</label>
+                <textarea id="projectDesc" class="form-control" placeholder="Describe the video edit, color grade, motion graphics, or client requirements..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-gold" style="width:100%; padding:14px; font-size:1rem;">
+                🚀 Publish to Live Website
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 2: MANAGE WORKS -->
+    <div class="tab-panel" id="manageTab">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2>Uploaded Portfolio Works</h2>
+          <p>Review or delete your custom uploaded designs.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Thumbnail</th>
+                <th>Project Title & Tools</th>
+                <th>Category</th>
+                <th>Date Added</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: INQUIRIES INBOX -->
+    <div class="tab-panel" id="inquiriesTab">
+      <div class="admin-card">
+        <div class="admin-card-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h2>Client Inquiries & Leads</h2>
+            <p>Messages submitted through your website contact form.</p>
+          </div>
+          <button class="btn btn-outline" id="clearInquiriesBtn" style="font-size:0.8rem;">Clear All</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Email Address</th>
+                <th>Project Type</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Quick Action</th>
+              </tr>
+            </thead>
+            <tbody id="inquiriesTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="admin-toast" id="adminToast">
+    <span id="adminToastText">Action completed</span>
+  </div>
+
+  <!-- Admin JS File -->
+  <script src="js/admin.js"></script>
+</body>
+</html>
