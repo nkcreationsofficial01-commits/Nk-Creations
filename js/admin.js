@@ -3,7 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const DEFAULT_PIN = 'nkadmin2026';
+  const DEFAULT_PIN = '1234';
   const loginBackdrop = document.getElementById('loginBackdrop');
   const loginForm = document.getElementById('loginForm');
   const pinInput = document.getElementById('pinInput');
